@@ -92,7 +92,11 @@ def main():
     config.load_incluster_config()
     print("Config for cluster api loaded...")
     namespace = open("/var/run/secrets/kubernetes.io/serviceaccount/namespace").read()
-    watchForChanges(label, targetFolder, url, method, payload, namespace)
+    while True:
+        try:
+            watchForChanges(label, targetFolder, url, method, payload, namespace)
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
 
 
 if __name__ == '__main__':
